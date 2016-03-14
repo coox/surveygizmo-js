@@ -5,9 +5,9 @@
  * https://apihelp.surveygizmo.com/help/article/link/us-or-eu-api
  */
 
-const sgRestApiRegion = {
+const region = {
   EU: 'EU',
   US: 'US',
 };
 
-module.exports = sgRestApiRegion;
+export default region;
