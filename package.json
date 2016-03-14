@@ -1,0 +1,42 @@
+{
+  "name": "surveygizmo-rest-api",
+  "version": "0.0.1",
+  "description": "Universal SurveyGizmo REST API client for JavaScript",
+  "license": "MIT",
+  "author": "GarageScore <hackers@garagescore.com>",
+  "contributors": [
+    {
+      "name": "Eric Redon",
+      "email": "eredon@garagescore.com"
+    },
+    {
+      "name": "Jean-Sébastien Carinos",
+      "email": "jscarinos@garagescore.com"
+    }
+  ],
+  "main": "surveygizmo-rest-api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coox/surveygizmo-rest-api.git"
+  },
+  "keywords": [
+    "surveygizmo",
+    "sgizmo",
+    "rest",
+    "api",
+    "client",
+    "javascript",
+    "browser",
+    "node"
+  ],
+  "bugs": {
+    "url": "https://github.com/coox/surveygizmo-rest-api/issues"
+  },
+  "homepage": "https://github.com/coox/surveygizmo-rest-api#readme",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
