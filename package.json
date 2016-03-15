@@ -20,7 +20,7 @@
     "lint": "eslint .",
     "prepublish": "npm run build",
     "test": "cd src && mocha --recursive --compilers js:babel-register",
-    "testbuild": "cd src && mocha --recursive"
+    "testbuild": "cd build && mocha --recursive"
   },
   "repository": {
     "type": "git",
