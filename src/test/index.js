@@ -1,20 +1,30 @@
 import chai from 'chai';
-import region from '../lib/region';
+import libDomain from '../lib/domain';
+import libRegion from '../lib/region';
 
 const expect = chai.expect;
 
 describe('SurveyGizmo REST API', () => {
-  describe('region', () => {
+  describe('lib/domain', () => {
+    it('getDomain() should look like a surveygizmo domain', () => {
+      const domain = libDomain.getDomain();
+      expect(domain).to.not.be.undefined;
+      expect(domain).to.be.a.string;
+      expect(domain).to.match(/\.surveygizmo\./);
+    });
+  });
+
+  describe('lib/region', () => {
     it('should define EU', () => {
-      expect(region.EU).to.not.be.undefined;
+      expect(libRegion.EU).to.not.be.undefined;
     });
 
     it('should define US', () => {
-      expect(region.US).to.not.be.undefined;
+      expect(libRegion.US).to.not.be.undefined;
     });
 
     it('should not define GARBAGE', () => {
-      expect(region.GARBAGE).to.be.undefined;
+      expect(libRegion.GARBAGE).to.be.undefined;
     });
   });
 });

@@ -5,9 +5,7 @@
  * https://apihelp.surveygizmo.com/help/article/link/us-or-eu-api
  */
 
-const region = {
+export default {
   EU: 'EU',
   US: 'US',
 };
-
-export default region;

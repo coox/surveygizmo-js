@@ -1,6 +1,6 @@
 {
   "name": "surveygizmo-rest-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Universal SurveyGizmo REST API client for JavaScript",
   "license": "MIT",
   "author": "GarageScore <hackers@garagescore.com>",
@@ -19,8 +19,8 @@
     "build": "babel -d build/ src/",
     "lint": "eslint .",
     "prepublish": "npm run build",
-    "test": "mocha src/test/*.js --compilers js:babel-register",
-    "testbuild": "mocha build/test/*.js"
+    "test": "cd src && mocha --recursive --compilers js:babel-register",
+    "testbuild": "cd src && mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/coox/surveygizmo-rest-api#readme",
   "dependencies": {
+    "config": "^1.19.0",
     "isomorphic-fetch": "^2.2.1"
   },
   "devDependencies": {
