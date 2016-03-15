@@ -13,14 +13,14 @@ const _domainByRegion = {
   [libRegion.US]: 'restapi.surveygizmo.com',
 };
 
-const getDomainForRegion = (region) => _domainByRegion[region];
+const getForRegion = (region) => _domainByRegion[region];
 
-const getDomain = () => getDomainForRegion(config.get('region'));
+const get = () => getForRegion(config.get('region'));
 
 /*
  * Public API
  */
 export default {
-  getDomain,
-  getDomainForRegion,
+  get,
+  getForRegion,
 };

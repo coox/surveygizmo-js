@@ -6,8 +6,8 @@ const expect = chai.expect;
 
 describe('SurveyGizmo REST API', () => {
   describe('lib/domain', () => {
-    it('getDomain() should look like a surveygizmo domain', () => {
-      const domain = libDomain.getDomain();
+    it('get() should look like a surveygizmo domain', () => {
+      const domain = libDomain.get();
       expect(domain).to.not.be.undefined;
       expect(domain).to.be.a.string;
       expect(domain).to.match(/\.surveygizmo\./);
