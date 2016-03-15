@@ -1,5 +1,5 @@
 import chai from 'chai';
-import region from '../src/region';
+import region from '../lib/region';
 
 const expect = chai.expect;
 
