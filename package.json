@@ -41,8 +41,10 @@
   },
   "homepage": "https://github.com/coox/surveygizmo-rest-api#readme",
   "dependencies": {
+    "babel-polyfill": "^6.7.2",
     "config": "^1.19.0",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "urijs": "^1.17.1"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
