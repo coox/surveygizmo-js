@@ -1,7 +1,7 @@
 {
-  "name": "surveygizmo-rest-api",
-  "version": "0.0.3",
-  "description": "Universal SurveyGizmo REST API client for JavaScript",
+  "name": "surveygizmo-js",
+  "version": "0.0.0",
+  "description": "JavaScript tooling for SurveyGizmo",
   "license": "MIT",
   "author": "GarageScore <hackers@garagescore.com>",
   "contributors": [
@@ -14,7 +14,7 @@
       "email": "jscarinos@garagescore.com"
     }
   ],
-  "main": "surveygizmo-rest-api.js",
+  "main": "surveygizmo.js",
   "scripts": {
     "build": "babel -d build/ src/",
     "lint": "eslint .",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/coox/surveygizmo-rest-api.git"
+    "url": "https://github.com/coox/surveygizmo-js.git"
   },
   "keywords": [
     "surveygizmo",
@@ -33,17 +33,20 @@
     "api",
     "client",
     "javascript",
+    "universal",
+    "isomorphic",
     "browser",
     "node"
   ],
   "bugs": {
-    "url": "https://github.com/coox/surveygizmo-rest-api/issues"
+    "url": "https://github.com/coox/surveygizmo-js/issues"
   },
-  "homepage": "https://github.com/coox/surveygizmo-rest-api#readme",
+  "homepage": "https://github.com/coox/surveygizmo-js#readme",
   "dependencies": {
     "babel-polyfill": "^6.7.2",
     "config": "^1.19.0",
     "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.6.1",
     "urijs": "^1.17.1"
   },
   "devDependencies": {

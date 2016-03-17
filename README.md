@@ -1,2 +1,3 @@
-# surveygizmo-rest-api
-Universal SurveyGizmo REST API client for JavaScript
+# surveygizmo-js
+
+JavaScript tooling for SurveyGizmo
