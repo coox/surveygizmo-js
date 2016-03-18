@@ -82,14 +82,14 @@ const objectCallerFactory = {};
 objectCallerFactory[sgObjectCall.LIST.name] = object => ({
   name: `get${_.upperFirst(object.pluralName)}`,
   func(callback = undefined) {
-    return wrapRestApiFetch(this, 'GET', object.restApiResourceName, {}, callback);
+    return wrapRestApiFetch(this, 'GET', object.path, {}, callback);
   },
 });
 
 objectCallerFactory[sgObjectCall.GET.name] = object => ({
   name: `get${_.upperFirst(object.name)}`,
   func(objectId, callback = undefined) {
-    return wrapRestApiFetch(this, 'GET', `${object.restApiResourceName}/${objectId}`, {}, callback);
+    return wrapRestApiFetch(this, 'GET', `${object.path}/${objectId}`, {}, callback);
   },
 });
 

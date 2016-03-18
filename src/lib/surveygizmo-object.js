@@ -9,7 +9,7 @@ const objects = {};
 
 // https://apihelp.surveygizmo.com/help/article/link/account-object
 objects.account = {
-  restApiResourceName: 'accountuser',
+  path: 'accountuser',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
@@ -18,7 +18,7 @@ objects.account = {
 
 // https://apihelp.surveygizmo.com/help/article/link/accountteams-object
 objects.accountTeam = {
-  restApiResourceName: 'accountteams',
+  path: 'accountteams',
   calls: {
     [sgObjectCall.LIST.name]: {
       // showdeleted
@@ -36,7 +36,7 @@ objects.accountTeam = {
 
 // https://apihelp.surveygizmo.com/help/article/link/accountuser-object
 objects.accountUser = {
-  restApiResourceName: 'accountuser',
+  path: 'accountuser',
   calls: {
     [sgObjectCall.LIST.name]: {
       paginable: true,
@@ -54,7 +54,7 @@ objects.accountUser = {
 
 // https://apihelp.surveygizmo.com/help/article/link/contactlist-object
 objects.contactList = {
-  restApiResourceName: 'contactlist',
+  path: 'contactlist',
   calls: {
     [sgObjectCall.LIST.name]: {
       paginable: true,
@@ -70,7 +70,7 @@ objects.contactList = {
 
 // https://apihelp.surveygizmo.com/help/article/link/survey-object
 objects.survey = {
-  restApiResourceName: 'survey',
+  path: 'survey',
   calls: {
     [sgObjectCall.LIST.name]: {
       paginable: true,
@@ -90,7 +90,7 @@ objects.survey = {
 // https://apihelp.surveygizmo.com/help/article/link/surveypage-sub-object
 objects.surveyPage = {
   parent: objects.survey,
-  restApiResourceName: 'survey',
+  path: 'survey',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
@@ -110,7 +110,7 @@ objects.surveyPage = {
 // https://apihelp.surveygizmo.com/help/article/link/surveyquestion-sub-object
 objects.surveyQuestion = {
   parent: objects.survey,
-  restApiResourceName: 'surveyquestion',
+  path: 'surveyquestion',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
@@ -128,7 +128,7 @@ objects.surveyQuestion = {
 // https://apihelp.surveygizmo.com/help/article/link/surveyoption-sub-object
 objects.surveyOption = {
   parent: objects.surveyQuestion,
-  restApiResourceName: 'surveyquestion',
+  path: 'surveyquestion',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
@@ -146,7 +146,7 @@ objects.surveyOption = {
 // https://apihelp.surveygizmo.com/help/article/link/surveycampaign-sub-object
 objects.surveyCampaign = {
   parent: objects.survey,
-  restApiResourceName: 'surveycampaign',
+  path: 'surveycampaign',
   calls: {
     [sgObjectCall.LIST.name]: {
       paginable: true,
@@ -165,7 +165,7 @@ objects.surveyCampaign = {
 // https://apihelp.surveygizmo.com/help/article/link/contact-sub-object
 objects.contact = {
   parent: objects.surveyCampaign,
-  restApiResourceName: 'contact',
+  path: 'contact',
   calls: {
     [sgObjectCall.LIST.name]: {
       paginable: true,
@@ -184,7 +184,7 @@ objects.contact = {
 // https://apihelp.surveygizmo.com/help/article/link/emailmessage-sub-object
 objects.emailMessage = {
   parent: objects.surveyCampaign,
-  restApiResourceName: 'emailmessage',
+  path: 'emailmessage',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
@@ -202,7 +202,7 @@ objects.emailMessage = {
 // https://apihelp.surveygizmo.com/help/article/link/surveyresponse-sub-object
 objects.surveyResponse = {
   parent: objects.survey,
-  restApiResourceName: 'surveyresponse',
+  path: 'surveyresponse',
   calls: {
     [sgObjectCall.LIST.name]: {
       paginable: true,
@@ -222,7 +222,7 @@ objects.surveyResponse = {
 // https://apihelp.surveygizmo.com/help/article/link/surveystatistic-sub-object
 objects.surveyStatistic = {
   parent: objects.survey,
-  restApiResourceName: 'surveystatistic',
+  path: 'surveystatistic',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
@@ -232,7 +232,7 @@ objects.surveyStatistic = {
 // https://apihelp.surveygizmo.com/help/article/link/surveyreport-sub-object
 objects.surveyReport = {
   parent: objects.survey,
-  restApiResourceName: 'surveystatistic',
+  path: 'surveystatistic',
   calls: {
     [sgObjectCall.LIST.name]: {
     },
