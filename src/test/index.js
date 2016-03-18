@@ -5,41 +5,41 @@ const expect = chai.expect;
 
 describe('SurveyGizmo', () => {
   describe('surveygizmo-api', () => {
-    it('init() should return an api with expected default properties', () => {
-      const api = surveygizmo.api.init();
-      expect(api).to.not.be.undefined;
-      expect(api.auth).to.be.defined;
-      expect(api.region).to.be.defined;
+    it('gsRestApi.init() should return a gsRestApi with expected default properties', () => {
+      const sgRestApi = surveygizmo.restApi.init();
+      expect(sgRestApi).to.not.be.undefined;
+      expect(sgRestApi.config.auth).to.be.defined;
+      expect(sgRestApi.config.region).to.be.defined;
     });
 
-    it('init({ auth: {} }) should return a api with empty auth', () => {
-      const api = surveygizmo.api.init({ auth: undefined });
-      expect(api).to.not.be.undefined;
-      expect(api.auth).to.be.undefined;
-      expect(api.region).to.be.defined;
+    it('gsRestApi.init({ auth: {} }) should return a gsRestApi with empty auth', () => {
+      const sgRestApi = surveygizmo.restApi.init({ auth: undefined });
+      expect(sgRestApi).to.not.be.undefined;
+      expect(sgRestApi.config.auth).to.be.undefined;
+      expect(sgRestApi.config.region).to.be.defined;
     });
 
-    it('api.getAccounts() should return a list of Accounts', (done) => {
-      const api = surveygizmo.api.init();
-      api.getAccounts((err, accounts) => {
+    it('sgRestApi.getAccounts() should return a list of Accounts', (done) => {
+      const sgRestApi = surveygizmo.restApi.init();
+      sgRestApi.getAccounts((err, accounts) => {
         if (err) return done(err);
         expect(accounts).to.not.be.undefined;
         return done();
       });
     });
 
-    it('api.getAccountTeams() should return a list of Accounts', (done) => {
-      const api = surveygizmo.api.init();
-      api.getAccountTeams((err, accountTeams) => {
+    it('sgRestApi.getAccountTeams() should return a list of Accounts', (done) => {
+      const sgRestApi = surveygizmo.restApi.init();
+      sgRestApi.getAccountTeams((err, accountTeams) => {
         if (err) return done(err);
         expect(accountTeams).to.not.be.undefined;
         return done();
       });
     });
 
-    it('api.getSurveys() should return a list of Surveys', (done) => {
-      const api = surveygizmo.api.init();
-      api.getSurveys((err, surveys) => {
+    it('sgRestApi.getSurveys() should return a list of Surveys', (done) => {
+      const sgRestApi = surveygizmo.restApi.init();
+      sgRestApi.getSurveys((err, surveys) => {
         if (err) return done(err);
         expect(surveys).to.not.be.undefined;
         return done();

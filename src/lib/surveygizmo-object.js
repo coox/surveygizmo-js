@@ -255,9 +255,5 @@ Object.keys(objects).forEach(objectName => {
 
 const objectNames = Object.keys(objects);
 
-/*
- * Public API
- */
-
 export default objects;
 export { objectNames as names };

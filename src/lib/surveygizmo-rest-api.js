@@ -8,19 +8,20 @@ import { names as sgObjectNames } from './surveygizmo-object';
 import sgUtil from './surveygizmo-util';
 import URI from 'urijs';
 
+// https://apihelp.surveygizmo.com/help/article/link/versions-methods
 const restApiVersion = 'v4';
 
-function getRestApiUri(api, path) {
+function getRestApiUri(restApi, path) {
   return new URI(
     {
       protocol: 'https',
-      hostname: sgDomain.get(api.regionName),
+      hostname: sgDomain.get(restApi.config.regionName),
       path: `/${restApiVersion}/${path}`,
     }
   )
   .query({
-    api_token: api.auth.apiKey,
-    api_token_secret: api.auth.apiSecretKey,
+    api_token: restApi.config.auth.key,
+    api_token_secret: restApi.config.auth.secretKey,
   })
   ;
 }
@@ -121,7 +122,9 @@ objectCallerFactory[sgObjectCall.COPY.name] = object => ({
   },
 });
 
-const prototype = {};
+const prototype = {
+  config: {},
+};
 
 sgObjectNames.forEach(objectName => {
   const object = sgObject[objectName];
@@ -137,14 +140,11 @@ sgObjectNames.forEach(objectName => {
 });
 
 const init = (options = {}) => {
-  const api = Object.assign(Object.create(prototype), config, options);
+  const restApi = Object.create(prototype);
+  Object.assign(restApi.config, config.restApi, options);
 
-  return api;
+  return restApi;
 };
-
-/*
- * Public API
- */
 
 export default {
   init,

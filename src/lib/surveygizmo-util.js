@@ -11,10 +11,6 @@ const isValidObjectCallName = (objectCallName) => sgObjectCallNames.includes(obj
 const isValidObjectName = (objectName) => sgObjectNames.includes(objectName);
 const isValidRegionName = (regionName) => sgRegionNames.includes(regionName);
 
-/*
- * Public API
- */
-
 export default {
   isValidObjectCallName,
   isValidObjectName,

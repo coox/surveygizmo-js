@@ -19,9 +19,5 @@ Object.keys(objectCalls).forEach(objectCallName => {
   objectCalls[objectCallName].name = objectCallName;
 });
 
-/*
- * Public API
- */
-
 export default objectCalls;
 export { objectCallNames as names };

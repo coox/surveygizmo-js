@@ -15,9 +15,5 @@ Object.keys(regions).forEach(regionName => {
   regions[regionName].name = regionName;
 });
 
-/*
- * Public API
- */
-
 export default regions;
 export { regionNames as names };

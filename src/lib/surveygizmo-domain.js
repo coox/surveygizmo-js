@@ -11,11 +11,7 @@ const domainByRegionName = {
   [sgRegion.US.name]: 'restapi.surveygizmo.com',
 };
 
-const get = (regionName = config.get('regionName')) => domainByRegionName[regionName];
-
-/*
- * Public API
- */
+const get = (regionName = config.get('restApi.regionName')) => domainByRegionName[regionName];
 
 export default {
   get,
