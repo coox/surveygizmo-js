@@ -34,3 +34,6 @@ node_modules
 
 # Build destination directory
 build
+
+# Sublime Text Workspace
+*.sublime-workspace
