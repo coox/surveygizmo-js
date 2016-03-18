@@ -8,14 +8,14 @@ import { names as sgObjectNames } from './surveygizmo-object';
 import sgUtil from './surveygizmo-util';
 import URI from 'urijs';
 
-const apiVersion = 'v4';
+const restApiVersion = 'v4';
 
 function getRestApiUri(api, path) {
   return new URI(
     {
       protocol: 'https',
       hostname: sgDomain.get(api.regionName),
-      path: `/${apiVersion}/${path}`,
+      path: `/${restApiVersion}/${path}`,
     }
   )
   .query({
