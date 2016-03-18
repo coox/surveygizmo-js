@@ -1,4 +1,4 @@
-import sgRegion from '../lib/surveygizmo-region';
+import { regions as sgRegions } from '../lib/surveygizmo/region';
 
 const restApi = {};
 
@@ -12,7 +12,7 @@ restApi.auth = {
 restApi.maximumFetchesPerMinute = process.env.SURVEYGIZMO_REST_API_MAXIMUM_FETCHES_PER_MINUTE || 30;
 
 // https://apihelp.surveygizmo.com/help/article/link/us-or-eu-api
-restApi.regionName = process.env.SURVEYGIZMO_REST_API_REGION_NAME || sgRegion.US.name;
+restApi.regionName = process.env.SURVEYGIZMO_REST_API_REGION_NAME || sgRegions.US.name;
 
 export {
   restApi,

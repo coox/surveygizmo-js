@@ -8,12 +8,17 @@ const regions = {
   US: {},
 };
 
-const regionNames = Object.keys(regions);
-
 // Guarantee a `name` property
 Object.keys(regions).forEach(regionName => {
   regions[regionName].name = regionName;
 });
 
-export default regions;
-export { regionNames as names };
+const regionNames = Object.keys(regions);
+
+const region = name => regionNames[name];
+
+export default region;
+export {
+  regionNames as names,
+  regions,
+};

@@ -1,4 +1,4 @@
-import sgObjectCall from './surveygizmo-object-call';
+import { objectCalls as sgObjectCalls } from './object-call';
 
 /*
  * Define properties of SurveyGizmo REST API objects.
@@ -11,7 +11,7 @@ const objects = {};
 objects.account = {
   path: 'accountuser',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
   },
 };
@@ -20,16 +20,16 @@ objects.account = {
 objects.accountTeam = {
   path: 'accountteams',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       // showdeleted
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -38,16 +38,16 @@ objects.accountTeam = {
 objects.accountUser = {
   path: 'accountuser',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       paginable: true,
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -56,14 +56,14 @@ objects.accountUser = {
 objects.contactList = {
   path: 'contactlist',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       paginable: true,
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
   },
 };
@@ -72,17 +72,17 @@ objects.contactList = {
 objects.survey = {
   path: 'survey',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       paginable: true,
       filterable: true,
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -92,17 +92,17 @@ objects.surveyPage = {
   parent: objects.survey,
   path: 'survey',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.COPY.name]: {
+    [sgObjectCalls.COPY.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -112,15 +112,15 @@ objects.surveyQuestion = {
   parent: objects.survey,
   path: 'surveyquestion',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -130,15 +130,15 @@ objects.surveyOption = {
   parent: objects.surveyQuestion,
   path: 'surveyquestion',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -148,16 +148,16 @@ objects.surveyCampaign = {
   parent: objects.survey,
   path: 'surveycampaign',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       paginable: true,
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -167,16 +167,16 @@ objects.contact = {
   parent: objects.surveyCampaign,
   path: 'contact',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       paginable: true,
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -186,15 +186,15 @@ objects.emailMessage = {
   parent: objects.surveyCampaign,
   path: 'emailmessage',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -204,17 +204,17 @@ objects.surveyResponse = {
   parent: objects.survey,
   path: 'surveyresponse',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
       paginable: true,
       filterable: true,
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.CREATE.name]: {
+    [sgObjectCalls.CREATE.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -224,7 +224,7 @@ objects.surveyStatistic = {
   parent: objects.survey,
   path: 'surveystatistic',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
   },
 };
@@ -234,13 +234,13 @@ objects.surveyReport = {
   parent: objects.survey,
   path: 'surveystatistic',
   calls: {
-    [sgObjectCall.LIST.name]: {
+    [sgObjectCalls.LIST.name]: {
     },
-    [sgObjectCall.GET.name]: {
+    [sgObjectCalls.GET.name]: {
     },
-    [sgObjectCall.UPDATE.name]: {
+    [sgObjectCalls.UPDATE.name]: {
     },
-    [sgObjectCall.DELETE.name]: {
+    [sgObjectCalls.DELETE.name]: {
     },
   },
 };
@@ -255,5 +255,10 @@ Object.keys(objects).forEach(objectName => {
 
 const objectNames = Object.keys(objects);
 
-export default objects;
-export { objectNames as names };
+const object = name => objects[name];
+
+export default object;
+export {
+  objectNames as names,
+  objects,
+};

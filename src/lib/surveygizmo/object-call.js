@@ -4,20 +4,31 @@
  */
 
 const objectCalls = {
-  LIST: {},
-  GET: {},
-  CREATE: {},
-  UPDATE: {},
-  DELETE: {},
-  COPY: {},
+  LIST: {
+  },
+  GET: {
+  },
+  CREATE: {
+  },
+  UPDATE: {
+  },
+  DELETE: {
+  },
+  COPY: {
+  },
 };
-
-const objectCallNames = Object.keys(objectCalls);
 
 // Guarantee a `name` property
 Object.keys(objectCalls).forEach(objectCallName => {
   objectCalls[objectCallName].name = objectCallName;
 });
 
-export default objectCalls;
-export { objectCallNames as names };
+const objectCallNames = Object.keys(objectCalls);
+
+const objectCall = name => objectCalls[name];
+
+export default objectCall;
+export {
+  objectCallNames as names,
+  objectCalls,
+};
