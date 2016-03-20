@@ -154,7 +154,9 @@ objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
   func(objectId, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     options[`${object.name}Id`] = objectId;
-    console.log('Stub DELETE ${object.name} ${objectId}');
+    return this.wrapRestApiFetch(
+      'DELETE', `${object.getRoute(options)}`, options, callback
+    );
   },
 });
 
