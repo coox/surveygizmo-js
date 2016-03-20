@@ -75,6 +75,12 @@ const prototype = {
   },
 };
 
+/*
+ * () => [,]
+ * ({}) => [{},]
+ * (() => {}) => [,() => {}]
+ * ({}, () => {}) => [{}, () => {}]
+ */
 const assignOptionsAndCallbackFromArgs = (args) => {
   let options = {};
   let callback;
@@ -82,7 +88,7 @@ const assignOptionsAndCallbackFromArgs = (args) => {
   if (args.length !== 0) {
     if (args.length === 1) {
       if (!_.isFunction(args[0]) && _.isObject(args[0])) {
-        options = args[0];
+        options = Object.assign({}, args[0]);
       } else if (_.isFunction(args[0])) {
         callback = args[0];
       } else {
@@ -92,7 +98,8 @@ const assignOptionsAndCallbackFromArgs = (args) => {
       }
     } else if (args.length === 2) {
       if ((!_.isFunction(args[0]) && _.isObject(args[0])) && _.isFunction(args[1])) {
-        [options, callback] = args;
+        options = Object.assign({}, args[0]);
+        callback = args[1];
       } else {
         throw new Error(
           'Invalid arguments'
