@@ -81,50 +81,89 @@ const prototype = {
   },
 };
 
+const assignOptionsAndCallbackFromArgs = (args) => {
+  let options = {};
+  let callback;
+
+  if (args.length !== 0) {
+    if (args.length === 1) {
+      if (!_.isFunction(args[0]) && _.isObject(args[0])) {
+        options = args[0];
+      } else if (_.isFunction(args[0])) {
+        callback = args[0];
+      } else {
+        throw new Error(
+          'Invalid argument'
+        );
+      }
+    } else if (args.length === 2) {
+      if ((!_.isFunction(args[0]) && _.isObject(args[0])) && _.isFunction(args[1])) {
+        [options, callback] = args;
+      } else {
+        throw new Error(
+          'Invalid arguments'
+        );
+      }
+    } else {
+      throw new Error(
+        'Invalid number of arguments'
+      );
+    }
+  }
+
+  return [options, callback];
+};
+
 const objectCallerFactories = {};
 
-objectCallerFactories[sgObjectCalls.LIST.name] = (object, options) => ({
+objectCallerFactories[sgObjectCalls.LIST.name] = object => ({
   name: `get${_.upperFirst(object.pluralName)}`,
-  func(callback = undefined) {
+  func(...args) {
+    const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     return this.wrapRestApiFetch(
       'GET', `${object.getRoute(options)}`, options, callback
     );
   },
 });
 
-objectCallerFactories[sgObjectCalls.GET.name] = (object, options) => ({
+objectCallerFactories[sgObjectCalls.GET.name] = object => ({
   name: `get${_.upperFirst(object.name)}`,
-  func(objectId, callback = undefined) {
+  func(objectId, ...args) {
+    const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     return this.wrapRestApiFetch(
-      'GET', `${object.getRoute(options)}/${objectId}`, options, callback
+      'GET', `${object.getRoute(options)}`, options, callback
     );
   },
 });
 
-objectCallerFactories[sgObjectCalls.CREATE.name] = (object, options) => ({
+objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
   name: `create${_.upperFirst(object.name)}`,
-  func(callback = undefined) {
+  func(objectId, ...args) {
+    const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     console.log('Stub CREATE ${object.name}');
   },
 });
 
-objectCallerFactories[sgObjectCalls.UPDATE.name] = (object, options) => ({
+objectCallerFactories[sgObjectCalls.UPDATE.name] = object => ({
   name: `update${_.upperFirst(object.name)}`,
-  func(objectId, callback = undefined) {
+  func(objectId, ...args) {
+    const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     console.log('Stub UPDATE ${object.name} ${objectId}');
   },
 });
 
-objectCallerFactories[sgObjectCalls.DELETE.name] = (object, options) => ({
+objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
   name: `delete${_.upperFirst(object.name)}`,
-  func(objectId, callback = undefined) {
+  func(objectId, ...args) {
+    const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     console.log('Stub DELETE ${object.name} ${objectId}');
   },
 });
 
-objectCallerFactories[sgObjectCalls.COPY.name] = (object, options) => ({
+objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
   name: `copy${_.upperFirst(object.name)}`,
-  func(objectId, callback = undefined) {
+  func(objectId, ...args) {
+    const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     console.log('Stub COPY ${object.name} ${objectId}');
   },
 });
