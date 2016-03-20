@@ -44,7 +44,7 @@ const prototype = {
       return response.json();
     })
     .then(result => {
-      if (typeof(result.result_ok) === 'undefined') {
+      if (_.isUndefined(result.result_ok)) {
         throw new Error(
           `REST API responded to ${method} ${restApiUri.path()} with undefined result`
         );
@@ -57,7 +57,7 @@ const prototype = {
         );
       }
 
-      if (typeof(result.data) === 'undefined') {
+      if (_.isUndefined(result.data)) {
         throw new Error(
           `REST API responded to ${method} ${restApiUri.path()} with undefined data`
         );
@@ -66,13 +66,13 @@ const prototype = {
       return result.data;
     })
     .then(data => {
-      if (typeof(callback) === 'undefined') {
+      if (_.isUndefined(callback)) {
         return data;
       }
       return callback(null, data);
     })
     .catch(reason => {
-      if (typeof(callback) === 'undefined') {
+      if (_.isUndefined(callback)) {
         throw new Error(reason);
       }
       return callback(reason);
@@ -175,7 +175,7 @@ objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
 
 sgObjectNames.forEach(objectName => {
   const object = sgObjects[objectName];
-  if (typeof(object.calls) !== 'undefined') {
+  if (!_.isUndefined(object.calls)) {
     Object.keys(object.calls).forEach(objectCallName => {
       if (!sgUtil.isValidObjectCallName(objectCallName)) {
         throw new Error(`SurveyGizmo Object ${objectName} defines invalid call ${objectCallName}`);

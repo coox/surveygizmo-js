@@ -269,7 +269,7 @@ objects.surveyReport = Object.assign(Object.create(prototype), {
 // Guarantee a `name` and a `pluralName` property
 Object.keys(objects).forEach(objectName => {
   objects[objectName].name = objectName;
-  if (typeof(objects[objectName].pluralName) === 'undefined') {
+  if (_.isUndefined(objects[objectName].pluralName)) {
     objects[objectName].pluralName = `${objectName}s`;
   }
 });
