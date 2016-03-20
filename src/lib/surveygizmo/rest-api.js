@@ -146,10 +146,14 @@ objectCallerFactories[sgObjectCalls.GET.name] = object => ({
 
 objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
   name: `create${_.upperFirst(object.name)}`,
-  func(objectId, ...args) {
+  func(objectBody, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
-    options[`${object.name}Id`] = objectId;
-    console.log('Stub CREATE ${object.name}');
+    if (!_.isUndefined(objectBody)) {
+      options.body = objectBody;
+    }
+    return this.wrapRestApiFetch(
+      'PUT', `${object.getRoute(options)}`, options, callback
+    );
   },
 });
 
