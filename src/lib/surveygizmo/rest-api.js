@@ -30,10 +30,16 @@ const prototype = {
 
   wrapRestApiFetch(method, path, options = {}, callback = undefined) {
     const restApiUri = this.getRestApiUri(path);
+
+    const fetchOptions = { method };
+
+    if (!_.isUndefined(options.body)) {
+      fetchOptions.body = URI.buildQuery(options.body);
+    }
+
     return fetch(
-      restApiUri.toString(), {
-        method,
-      }
+      restApiUri.toString(),
+      fetchOptions
     )
     .then(response => {
       if (response.status >= 400) {
