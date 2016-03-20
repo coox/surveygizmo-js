@@ -57,12 +57,6 @@ const prototype = {
         );
       }
 
-      if (_.isUndefined(result.data)) {
-        throw new Error(
-          `REST API responded to ${method} ${restApiUri.path()} with undefined data`
-        );
-      }
-
       return result.data;
     })
     .then(data => {
