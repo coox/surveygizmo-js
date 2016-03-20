@@ -5,20 +5,26 @@ import { objectCalls as sgObjectCalls } from './object-call';
  * https://apihelp.surveygizmo.com/help/article/link/objects
  */
 
+const prototype = {
+  getRoute(options) {
+    return this.nameInRoute;
+  },
+};
+
 const objects = {};
 
 // https://apihelp.surveygizmo.com/help/article/link/account-object
-objects.account = {
-  path: 'accountuser',
+objects.account = Object.assign(Object.create(prototype), {
+  nameInRoute: 'accountuser',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/accountteams-object
-objects.accountTeam = {
-  path: 'accountteams',
+objects.accountTeam = Object.assign(Object.create(prototype), {
+  nameInRoute: 'accountteams',
   calls: {
     [sgObjectCalls.LIST.name]: {
       // showdeleted
@@ -32,11 +38,11 @@ objects.accountTeam = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/accountuser-object
-objects.accountUser = {
-  path: 'accountuser',
+objects.accountUser = Object.assign(Object.create(prototype), {
+  nameInRoute: 'accountuser',
   calls: {
     [sgObjectCalls.LIST.name]: {
       paginable: true,
@@ -50,11 +56,11 @@ objects.accountUser = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/contactlist-object
-objects.contactList = {
-  path: 'contactlist',
+objects.contactList = Object.assign(Object.create(prototype), {
+  nameInRoute: 'contactlist',
   calls: {
     [sgObjectCalls.LIST.name]: {
       paginable: true,
@@ -66,11 +72,11 @@ objects.contactList = {
     [sgObjectCalls.UPDATE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/survey-object
-objects.survey = {
-  path: 'survey',
+objects.survey = Object.assign(Object.create(prototype), {
+  nameInRoute: 'survey',
   calls: {
     [sgObjectCalls.LIST.name]: {
       paginable: true,
@@ -85,12 +91,12 @@ objects.survey = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveypage-sub-object
-objects.surveyPage = {
+objects.surveyPage = Object.assign(Object.create(prototype), {
   parent: objects.survey,
-  path: 'survey',
+  nameInRoute: 'survey',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
@@ -105,12 +111,12 @@ objects.surveyPage = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveyquestion-sub-object
-objects.surveyQuestion = {
+objects.surveyQuestion = Object.assign(Object.create(prototype), {
   parent: objects.survey,
-  path: 'surveyquestion',
+  nameInRoute: 'surveyquestion',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
@@ -123,12 +129,12 @@ objects.surveyQuestion = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveyoption-sub-object
-objects.surveyOption = {
+objects.surveyOption = Object.assign(Object.create(prototype), {
   parent: objects.surveyQuestion,
-  path: 'surveyquestion',
+  nameInRoute: 'surveyquestion',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
@@ -141,12 +147,12 @@ objects.surveyOption = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveycampaign-sub-object
-objects.surveyCampaign = {
+objects.surveyCampaign = Object.assign(Object.create(prototype), {
   parent: objects.survey,
-  path: 'surveycampaign',
+  nameInRoute: 'surveycampaign',
   calls: {
     [sgObjectCalls.LIST.name]: {
       paginable: true,
@@ -160,12 +166,12 @@ objects.surveyCampaign = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/contact-sub-object
-objects.contact = {
+objects.contact = Object.assign(Object.create(prototype), {
   parent: objects.surveyCampaign,
-  path: 'contact',
+  nameInRoute: 'contact',
   calls: {
     [sgObjectCalls.LIST.name]: {
       paginable: true,
@@ -179,12 +185,12 @@ objects.contact = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/emailmessage-sub-object
-objects.emailMessage = {
+objects.emailMessage = Object.assign(Object.create(prototype), {
   parent: objects.surveyCampaign,
-  path: 'emailmessage',
+  nameInRoute: 'emailmessage',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
@@ -197,12 +203,12 @@ objects.emailMessage = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveyresponse-sub-object
-objects.surveyResponse = {
+objects.surveyResponse = Object.assign(Object.create(prototype), {
   parent: objects.survey,
-  path: 'surveyresponse',
+  nameInRoute: 'surveyresponse',
   calls: {
     [sgObjectCalls.LIST.name]: {
       paginable: true,
@@ -217,22 +223,22 @@ objects.surveyResponse = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveystatistic-sub-object
-objects.surveyStatistic = {
+objects.surveyStatistic = Object.assign(Object.create(prototype), {
   parent: objects.survey,
-  path: 'surveystatistic',
+  nameInRoute: 'surveystatistic',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
   },
-};
+});
 
 // https://apihelp.surveygizmo.com/help/article/link/surveyreport-sub-object
-objects.surveyReport = {
+objects.surveyReport = Object.assign(Object.create(prototype), {
   parent: objects.survey,
-  path: 'surveystatistic',
+  nameInRoute: 'surveystatistic',
   calls: {
     [sgObjectCalls.LIST.name]: {
     },
@@ -243,7 +249,7 @@ objects.surveyReport = {
     [sgObjectCalls.DELETE.name]: {
     },
   },
-};
+});
 
 // Guarantee a `name` and a `pluralName` property
 Object.keys(objects).forEach(objectName => {

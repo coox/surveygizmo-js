@@ -83,42 +83,46 @@ const prototype = {
 
 const objectCallerFactories = {};
 
-objectCallerFactories[sgObjectCalls.LIST.name] = object => ({
+objectCallerFactories[sgObjectCalls.LIST.name] = (object, options) => ({
   name: `get${_.upperFirst(object.pluralName)}`,
   func(callback = undefined) {
-    return this.wrapRestApiFetch('GET', object.path, {}, callback);
+    return this.wrapRestApiFetch(
+      'GET', `${object.getRoute(options)}`, options, callback
+    );
   },
 });
 
-objectCallerFactories[sgObjectCalls.GET.name] = object => ({
+objectCallerFactories[sgObjectCalls.GET.name] = (object, options) => ({
   name: `get${_.upperFirst(object.name)}`,
   func(objectId, callback = undefined) {
-    return this.wrapRestApiFetch('GET', `${object.path}/${objectId}`, {}, callback);
+    return this.wrapRestApiFetch(
+      'GET', `${object.getRoute(options)}/${objectId}`, options, callback
+    );
   },
 });
 
-objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
+objectCallerFactories[sgObjectCalls.CREATE.name] = (object, options) => ({
   name: `create${_.upperFirst(object.name)}`,
   func(callback = undefined) {
     console.log('Stub CREATE ${object.name}');
   },
 });
 
-objectCallerFactories[sgObjectCalls.UPDATE.name] = object => ({
+objectCallerFactories[sgObjectCalls.UPDATE.name] = (object, options) => ({
   name: `update${_.upperFirst(object.name)}`,
   func(objectId, callback = undefined) {
     console.log('Stub UPDATE ${object.name} ${objectId}');
   },
 });
 
-objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
+objectCallerFactories[sgObjectCalls.DELETE.name] = (object, options) => ({
   name: `delete${_.upperFirst(object.name)}`,
   func(objectId, callback = undefined) {
     console.log('Stub DELETE ${object.name} ${objectId}');
   },
 });
 
-objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
+objectCallerFactories[sgObjectCalls.COPY.name] = (object, options) => ({
   name: `copy${_.upperFirst(object.name)}`,
   func(objectId, callback = undefined) {
     console.log('Stub COPY ${object.name} ${objectId}');
