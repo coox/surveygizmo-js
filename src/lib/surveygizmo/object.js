@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { objectCalls as sgObjectCalls } from './object-call';
 
 /*
@@ -6,8 +7,22 @@ import { objectCalls as sgObjectCalls } from './object-call';
  */
 
 const prototype = {
+  /*
+   * () => 'object'
+   * (1) => 'object/1'
+   * (1, { parentId: 2 }) => 'parent/2/object/1'
+   * ({ parentId: 2 }) => 'parent/2/object'
+   */
   getRoute(options) {
-    return this.nameInRoute;
+    if (_.isUndefined(this.nameInRoute)) {
+      return undefined;
+    }
+
+    const parentRoute = _.isUndefined(this.parent) ? undefined : this.parent.getRoute(options);
+
+    return _.compact([
+      parentRoute, this.nameInRoute, options[`${this.name}Id`],
+    ]).join('/');
   },
 };
 

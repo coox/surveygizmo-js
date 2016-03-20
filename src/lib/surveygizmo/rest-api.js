@@ -130,6 +130,7 @@ objectCallerFactories[sgObjectCalls.GET.name] = object => ({
   name: `get${_.upperFirst(object.name)}`,
   func(objectId, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
+    options[`${object.name}Id`] = objectId;
     return this.wrapRestApiFetch(
       'GET', `${object.getRoute(options)}`, options, callback
     );
@@ -140,6 +141,7 @@ objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
   name: `create${_.upperFirst(object.name)}`,
   func(objectId, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
+    options[`${object.name}Id`] = objectId;
     console.log('Stub CREATE ${object.name}');
   },
 });
@@ -148,6 +150,7 @@ objectCallerFactories[sgObjectCalls.UPDATE.name] = object => ({
   name: `update${_.upperFirst(object.name)}`,
   func(objectId, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
+    options[`${object.name}Id`] = objectId;
     console.log('Stub UPDATE ${object.name} ${objectId}');
   },
 });
@@ -156,6 +159,7 @@ objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
   name: `delete${_.upperFirst(object.name)}`,
   func(objectId, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
+    options[`${object.name}Id`] = objectId;
     console.log('Stub DELETE ${object.name} ${objectId}');
   },
 });
@@ -164,6 +168,7 @@ objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
   name: `copy${_.upperFirst(object.name)}`,
   func(objectId, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
+    options[`${object.name}Id`] = objectId;
     console.log('Stub COPY ${object.name} ${objectId}');
   },
 });
