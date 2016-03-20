@@ -148,9 +148,7 @@ objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
   name: `create${_.upperFirst(object.name)}`,
   func(objectBody, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
-    if (!_.isUndefined(objectBody)) {
-      options.body = objectBody;
-    }
+    options.body = objectBody;
     return this.wrapRestApiFetch(
       'PUT', `${object.getRoute(options)}`, options, callback
     );
@@ -159,10 +157,13 @@ objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
 
 objectCallerFactories[sgObjectCalls.UPDATE.name] = object => ({
   name: `update${_.upperFirst(object.name)}`,
-  func(objectId, ...args) {
+  func(objectId, objectBody, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     options[`${object.name}Id`] = objectId;
-    console.log('Stub UPDATE ${object.name} ${objectId}');
+    options.body = objectBody;
+    return this.wrapRestApiFetch(
+      'POST', `${object.getRoute(options)}`, options, callback
+    );
   },
 });
 
@@ -179,10 +180,13 @@ objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
 
 objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
   name: `copy${_.upperFirst(object.name)}`,
-  func(objectId, ...args) {
+  func(objectId, objectBody, ...args) {
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     options[`${object.name}Id`] = objectId;
-    console.log('Stub COPY ${object.name} ${objectId}');
+    options.body = Object.assign({ copy: true }, objectBody);
+    return this.wrapRestApiFetch(
+      'POST', `${object.getRoute(options)}`, options, callback
+    );
   },
 });
 
