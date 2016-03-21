@@ -1,6 +1,6 @@
 {
   "name": "surveygizmo-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "JavaScript tooling for SurveyGizmo",
   "license": "MIT",
   "author": "GarageScore <hackers@garagescore.com>",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/coox/surveygizmo-js.git"
+    "url": "https://github.com/garagescore/surveygizmo-js.git"
   },
   "keywords": [
     "surveygizmo",
@@ -39,9 +39,9 @@
     "node"
   ],
   "bugs": {
-    "url": "https://github.com/coox/surveygizmo-js/issues"
+    "url": "https://github.com/garagescore/surveygizmo-js/issues"
   },
-  "homepage": "https://github.com/coox/surveygizmo-js#readme",
+  "homepage": "https://github.com/garagescore/surveygizmo-js#readme",
   "dependencies": {
     "babel-polyfill": "^6.7.2",
     "config": "^1.19.0",
