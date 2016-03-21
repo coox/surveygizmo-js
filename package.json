@@ -14,7 +14,7 @@
       "email": "jscarinos@garagescore.com"
     }
   ],
-  "main": "surveygizmo.js",
+  "main": "build/lib/surveygizmo.js",
   "scripts": {
     "build": "babel -d build/ src/",
     "lint": "eslint .",
