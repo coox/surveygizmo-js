@@ -103,6 +103,8 @@ objects.survey = Object.assign(Object.create(prototype), {
     },
     [sgObjectCalls.UPDATE.name]: {
     },
+    [sgObjectCalls.COPY.name]: {
+    },
     [sgObjectCalls.DELETE.name]: {
     },
   },
@@ -120,8 +122,6 @@ objects.surveyPage = Object.assign(Object.create(prototype), {
     [sgObjectCalls.CREATE.name]: {
     },
     [sgObjectCalls.UPDATE.name]: {
-    },
-    [sgObjectCalls.COPY.name]: {
     },
     [sgObjectCalls.DELETE.name]: {
     },
