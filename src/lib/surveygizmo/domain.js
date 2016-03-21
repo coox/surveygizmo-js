@@ -1,4 +1,4 @@
-import config from 'config';
+import sgConfig from './config';
 import { regions as sgRegions } from './region';
 
 /*
@@ -15,6 +15,8 @@ const domainByRegionName = {
   },
 };
 
-const domain = (regionName = config.get('restApi.regionName')) => domainByRegionName[regionName];
+const domain =
+  (regionName = sgConfig.get('surveygizmo.restApi.regionName')) => domainByRegionName[regionName]
+;
 
 export default domain;

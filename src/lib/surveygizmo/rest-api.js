@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import config from 'config';
 import fetch from 'isomorphic-fetch';
+import sgConfig from 'config';
 import sgDomain from './domain';
 import { objects as sgObjects } from './object';
 import { objectCalls as sgObjectCalls } from './object-call';
@@ -12,7 +12,7 @@ import URI from 'urijs';
 const restApiVersion = 'v4';
 
 const prototype = {
-  config: Object.assign({}, config.get('restApi')),
+  config: Object.assign({}, sgConfig.get('surveygizmo.restApi')),
   getRestApiUri(path) {
     return new URI(
       {
