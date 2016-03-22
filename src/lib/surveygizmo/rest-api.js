@@ -106,10 +106,12 @@ const prototype = {
 };
 
 /*
- * () => [,]
- * ({}) => [{},]
- * (() => {}) => [,() => {}]
- * ({}, () => {}) => [{}, () => {}]
+ * () => [{}, undefined]
+ * ({}) => [{}, undefined]
+ * ({ k: v }) => [{ k: v}, undefined]
+ * (() => { return }) => [{}, () => { return }]
+ * ({}, () => { return }) => [{}, () => { return }]
+ * ({ k: v }, () => { return }) => [{ k: v }, () => { return }]
  */
 const assignOptionsAndCallbackFromArgs = (args) => {
   let options = {};
