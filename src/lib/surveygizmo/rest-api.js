@@ -65,6 +65,7 @@ const prototype = {
     )
     .then(response => {
       debug(`Fetch: ${method} ${restApiUri.path()}: ${response.status} ${response.statusText}`);
+      debug(response.json());
       if (response.status >= 400) {
         throw new Error(
           `REST API responded to ${method} ${restApiUri.path()} with status ${response.status}`
