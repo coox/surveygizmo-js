@@ -65,13 +65,16 @@ const prototype = {
     )
     .then(response => {
       debug(`Fetch: ${method} ${restApiUri.path()}: ${response.status} ${response.statusText}`);
-      debug(response.json());
+      const result = response.json();
+      debug(result);
+
       if (response.status >= 400) {
         throw new Error(
           `REST API responded to ${method} ${restApiUri.path()} with status ${response.status}`
         );
       }
-      return response.json();
+
+      return result;
     })
     .then(result => {
       if (_.isUndefined(result.result_ok)) {
