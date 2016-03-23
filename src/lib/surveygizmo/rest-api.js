@@ -18,7 +18,7 @@ const restApiVersion = 'v4';
 const prototype = {
   config: Object.assign({}, sgConfig.get('surveygizmo.restApi')),
 
-  getRestApiUri(path) {
+  uri(path) {
     return new URI(
       {
         protocol: 'https',
@@ -33,8 +33,8 @@ const prototype = {
     ;
   },
 
-  wrapRestApiFetch(method, path, options = {}, callback = undefined) {
-    const restApiUri = this.getRestApiUri(path);
+  fetch(method, path, options = {}) {
+    const uri = this.uri(path);
 
     /*
      * SurveyGizmo REST API does not exactly qualify as RESTful:
@@ -43,7 +43,7 @@ const prototype = {
      *    is passed in as the `_method` query parameter
      * https://apihelp.surveygizmo.com/help/article/link/versions-methods#methods
      */
-    restApiUri.addQuery('_method', method);
+    uri.addQuery('_method', method);
 
     /*
      * urijs can not stringify queries along this typical PHP pattern:
@@ -52,26 +52,28 @@ const prototype = {
      * This pattern being expected by SurveyGizmo, use qs stringify instead
      */
     if (!_.isUndefined(options.body)) {
-      restApiUri.query(
+      uri.query(
         qs.stringify(
-          Object.assign({}, restApiUri.query(true), options.body)
+          Object.assign({}, uri.query(true), options.body)
         )
       );
     }
 
-    debug(`Fetch: ${method} ${restApiUri.path()}`);
+    debug(`Fetch: ${method} ${uri.path()}`);
     debug(options.body);
     return fetch(
-      restApiUri.toString()
+      uri.toString()
     )
     .then(response => {
-      debug(`Fetch: ${method} ${restApiUri.path()}: ${response.status} ${response.statusText}`);
+      debug(`Fetch: ${method} ${uri.path()}: ${response.status} ${response.statusText}`);
       const result = response.json();
       debug(result);
 
+      this.lastFetchResponseDate = new Date();
+
       if (response.status >= 400) {
         throw new Error(
-          `REST API responded to ${method} ${restApiUri.path()} with status ${response.status}`
+          `REST API responded to ${method} ${uri.path()} with status ${response.status}`
         );
       }
 
@@ -80,31 +82,36 @@ const prototype = {
     .then(result => {
       if (_.isUndefined(result.result_ok)) {
         throw new Error(
-          `REST API responded to ${method} ${restApiUri.path()} with undefined result`
+          `REST API responded to ${method} ${uri.path()} with undefined result`
         );
       }
 
       if (!result.result_ok) {
         throw new Error(
-          `REST API responded to ${method} ${restApiUri.path()} with error result: `
+          `REST API responded to ${method} ${uri.path()} with error result: `
           + `${result.message} (code ${result.code})`
         );
       }
 
       return result;
     })
-    .then(result => {
-      if (_.isUndefined(callback)) {
-        return result;
-      }
-      return callback(null, result);
-    })
-    .catch(reason => {
-      if (_.isUndefined(callback)) {
-        throw new Error(reason);
-      }
-      return callback(reason);
-    })
+    ;
+  },
+
+  wrapFetch(method, path, options = {}, callback = undefined) {
+    return this.fetch(method, path, options)
+      .then(result => {
+        if (_.isUndefined(callback)) {
+          return result;
+        }
+        return callback(null, result);
+      })
+      .catch(reason => {
+        if (_.isUndefined(callback)) {
+          throw new Error(reason);
+        }
+        return callback(reason);
+      })
     ;
   },
 };
@@ -159,7 +166,7 @@ objectCallerFactories[sgObjectCalls.LIST.name] = object => ({
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     debug(`ObjectCall: ${sgObjectCalls.LIST.name} ${_.upperFirst(object.pluralName)}`);
     debug(options);
-    return this.wrapRestApiFetch(
+    return this.wrapFetch(
       'GET', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -172,7 +179,7 @@ objectCallerFactories[sgObjectCalls.GET.name] = object => ({
     options[`${object.name}Id`] = objectId;
     debug(`ObjectCall: ${sgObjectCalls.GET.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapRestApiFetch(
+    return this.wrapFetch(
       'GET', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -185,7 +192,7 @@ objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
     options.body = objectBody;
     debug(`ObjectCall: ${sgObjectCalls.CREATE.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapRestApiFetch(
+    return this.wrapFetch(
       'PUT', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -199,7 +206,7 @@ objectCallerFactories[sgObjectCalls.UPDATE.name] = object => ({
     options.body = objectBody;
     debug(`ObjectCall: ${sgObjectCalls.UPDATE.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapRestApiFetch(
+    return this.wrapFetch(
       'POST', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -212,7 +219,7 @@ objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
     options[`${object.name}Id`] = objectId;
     debug(`ObjectCall: ${sgObjectCalls.DELETE.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapRestApiFetch(
+    return this.wrapFetch(
       'DELETE', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -226,7 +233,7 @@ objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
     options.body = Object.assign({ copy: 'true' }, objectBody);
     debug(`ObjectCall: ${sgObjectCalls.COPY.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapRestApiFetch(
+    return this.wrapFetch(
       'POST', `${object.getRoute(options)}`, options, callback
     );
   },
