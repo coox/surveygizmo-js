@@ -17,6 +17,7 @@ const restApiVersion = 'v4';
 
 const prototype = {
   config: Object.assign({}, sgConfig.get('surveygizmo.restApi')),
+
   getRestApiUri(path) {
     return new URI(
       {
