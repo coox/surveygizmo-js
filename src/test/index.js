@@ -6,21 +6,21 @@ const expect = chai.expect;
 
 describe('surveygizmo', () => {
   describe('rest-api', () => {
-    it('surveygizmo.restApi() should return a restApi with expected default properties', () => {
+    it('restApi() should return a restApi with expected default properties', () => {
       const sgRestApi = surveygizmo.restApi();
       expect(sgRestApi).to.not.be.undefined;
       expect(sgRestApi.config.auth).to.be.defined;
       expect(sgRestApi.config.region).to.be.defined;
     });
 
-    it('surveygizmo.restApi({ auth: {} }) should return a gsRestApi with empty auth', () => {
+    it('restApi({ auth: {} }) should return a gsRestApi with empty auth', () => {
       const sgRestApi = surveygizmo.restApi({ auth: undefined });
       expect(sgRestApi).to.not.be.undefined;
       expect(sgRestApi.config.auth).to.be.undefined;
       expect(sgRestApi.config.region).to.be.defined;
     });
 
-    it('surveygizmo.restApi().getAccounts() should return a list of Accounts', (done) => {
+    it('getAccounts() should callback with a list of Accounts', (done) => {
       const sgRestApi = surveygizmo.restApi();
       sgRestApi.getAccounts((err, accounts) => {
         if (err) return done(err);
@@ -29,7 +29,22 @@ describe('surveygizmo', () => {
       });
     });
 
-    it('surveygizmo.restApi().getAccountTeams() should return a list of Accounts', (done) => {
+    it('getAccounts() should return a promise of a list of Accounts', (done) => {
+      const sgRestApi = surveygizmo.restApi();
+      const accountsPromise = sgRestApi.getAccounts();
+      expect(accountsPromise).to.not.be.undefined;
+      accountsPromise
+        .then(
+          accounts => {
+            expect(accounts).to.not.be.undefined;
+            return done();
+          }
+        )
+        .catch(reason => done(reason))
+      ;
+    });
+
+    it('getAccountTeams() should callback with a list of Account Teams', (done) => {
       const sgRestApi = surveygizmo.restApi();
       sgRestApi.getAccountTeams((err, accountTeams) => {
         if (err) return done(err);
@@ -38,7 +53,7 @@ describe('surveygizmo', () => {
       });
     });
 
-    it('surveygizmo.restApi().getSurveys() should return a list of Surveys', (done) => {
+    it('getSurveys() should callback with a list of Surveys', (done) => {
       const sgRestApi = surveygizmo.restApi();
       sgRestApi.getSurveys((err, surveys) => {
         if (err) return done(err);
@@ -48,8 +63,8 @@ describe('surveygizmo', () => {
     });
   });
 
-  describe('surveygizmo-domain', () => {
-    it('surveygizmo.domain().hostname should look like a surveygizmo domain', () => {
+  describe('domain', () => {
+    it('hostname() should look like a surveygizmo domain', () => {
       const sgDomain = surveygizmo.domain();
       expect(sgDomain).to.not.be.undefined;
       expect(sgDomain.hostname).to.not.be.undefined;
@@ -57,7 +72,7 @@ describe('surveygizmo', () => {
     });
   });
 
-  describe('surveygizmo.util', () => {
+  describe('util', () => {
     it('should validate standard region names', () => {
       expect(surveygizmo.util.isValidRegionName(sgRegions.EU.name)).to.be.true;
       expect(surveygizmo.util.isValidRegionName(sgRegions.US.name)).to.be.true;
@@ -69,7 +84,7 @@ describe('surveygizmo', () => {
   });
 });
 
-describe('surveygizmo/region', () => {
+describe('region', () => {
   describe('regions', () => {
     it('should export standard regions', () => {
       expect(sgRegions.EU).to.not.be.undefined;

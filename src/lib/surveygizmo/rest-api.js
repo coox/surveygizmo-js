@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import debugFactory from 'debug';
 import fetch from 'isomorphic-fetch';
+import rateLimit from 'function-rate-limit';
 import sgConfig from 'config';
 import sgDomain from './domain';
 import { objects as sgObjects } from './object';
@@ -69,8 +70,6 @@ const prototype = {
       const result = response.json();
       debug(result);
 
-      this.lastFetchResponseDate = new Date();
-
       if (response.status >= 400) {
         throw new Error(
           `REST API responded to ${method} ${uri.path()} with status ${response.status}`
@@ -98,20 +97,23 @@ const prototype = {
     ;
   },
 
-  wrapFetch(method, path, options = {}, callback = undefined) {
-    return this.fetch(method, path, options)
-      .then(result => {
-        if (_.isUndefined(callback)) {
-          return result;
-        }
-        return callback(null, result);
-      })
-      .catch(reason => {
-        if (_.isUndefined(callback)) {
-          throw new Error(reason);
-        }
-        return callback(reason);
-      })
+  query(...args) {
+    const fetchArgs = _.dropRight(args, 1);
+    const callback = _.last(args);
+
+    const rateLimitedFetchPromise = new Promise(
+      (resolve, reject) =>
+        this.rateLimitedFetchPromiseResolver(resolve, reject, ...fetchArgs)
+    );
+
+    if (_.isUndefined(callback)) {
+      // Caller expects a Promise
+      return rateLimitedFetchPromise;
+    }
+    // Caller expects a callback
+    return rateLimitedFetchPromise
+      .then(result => callback(null, result))
+      .catch(reason => callback(reason))
     ;
   },
 };
@@ -166,7 +168,7 @@ objectCallerFactories[sgObjectCalls.LIST.name] = object => ({
     const [options, callback] = assignOptionsAndCallbackFromArgs(args);
     debug(`ObjectCall: ${sgObjectCalls.LIST.name} ${_.upperFirst(object.pluralName)}`);
     debug(options);
-    return this.wrapFetch(
+    return this.query(
       'GET', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -179,7 +181,7 @@ objectCallerFactories[sgObjectCalls.GET.name] = object => ({
     options[`${object.name}Id`] = objectId;
     debug(`ObjectCall: ${sgObjectCalls.GET.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapFetch(
+    return this.query(
       'GET', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -192,7 +194,7 @@ objectCallerFactories[sgObjectCalls.CREATE.name] = object => ({
     options.body = objectBody;
     debug(`ObjectCall: ${sgObjectCalls.CREATE.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapFetch(
+    return this.query(
       'PUT', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -206,7 +208,7 @@ objectCallerFactories[sgObjectCalls.UPDATE.name] = object => ({
     options.body = objectBody;
     debug(`ObjectCall: ${sgObjectCalls.UPDATE.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapFetch(
+    return this.query(
       'POST', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -219,7 +221,7 @@ objectCallerFactories[sgObjectCalls.DELETE.name] = object => ({
     options[`${object.name}Id`] = objectId;
     debug(`ObjectCall: ${sgObjectCalls.DELETE.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapFetch(
+    return this.query(
       'DELETE', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -233,7 +235,7 @@ objectCallerFactories[sgObjectCalls.COPY.name] = object => ({
     options.body = Object.assign({ copy: 'true' }, objectBody);
     debug(`ObjectCall: ${sgObjectCalls.COPY.name} ${_.upperFirst(object.name)}`);
     debug(options);
-    return this.wrapFetch(
+    return this.query(
       'POST', `${object.getRoute(options)}`, options, callback
     );
   },
@@ -255,6 +257,17 @@ sgObjectNames.forEach(objectName => {
 const restApi = (configOverrides = {}) => {
   const instance = Object.create(prototype);
   instance.config = Object.assign({}, instance.config, configOverrides);
+
+  // https://apihelp.surveygizmo.com/help/article/link/api-request-limits
+  instance.rateLimitedFetchPromiseResolver = rateLimit.call(
+    instance,
+    instance.config.maximumFetchesPerMinute,
+    60000,
+    (resolve, reject, ...fetchArgs) =>
+      instance.fetch(...fetchArgs)
+        .then(result => resolve(result))
+        .catch(reason => reject(reason))
+  );
 
   return instance;
 };
