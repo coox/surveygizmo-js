@@ -81,6 +81,14 @@ describe('surveygizmo', () => {
     it('should not validate garbage', () => {
       expect(surveygizmo.util.isValidRegionName('GARBAGE')).to.be.false;
     });
+
+    it('should encode sguid 100125968 → "8kDyd"', () => {
+      expect(surveygizmo.util.encodeSguid(100125968)).to.equal('8kDyd');
+    });
+
+    it('should decode sguid "8kDyd" → 100125968', () => {
+      expect(surveygizmo.util.decodeSguid('8kDyd')).to.equal(100125968);
+    });
   });
 });
 
