@@ -67,32 +67,34 @@ const prototype = {
     )
     .then(response => {
       debug(`Fetch: ${method} ${uri.path()}: ${response.status} ${response.statusText}`);
-      const result = response.json();
-      debug(result);
-
+      const result = response.text();
       if (response.status >= 400) {
         throw new Error(
           `REST API responded to ${method} ${uri.path()} with status ${response.status}`
         );
       }
-
       return result;
     })
-    .then(result => {
-      if (_.isUndefined(result.result_ok)) {
-        throw new Error(
-          `REST API responded to ${method} ${uri.path()} with undefined result`
-        );
+    .then(resultTxt => {
+      debug(resultTxt);
+      try {
+        var result = JSON.parse(resultTxt);
+        if (_.isUndefined(result.result_ok)) {
+          throw new Error(
+            `REST API responded to ${method} ${uri.path()} with undefined result`
+          );
+        }
+        if (!result.result_ok) {
+          throw new Error(
+            `REST API responded to ${method} ${uri.path()} with error result: `
+            + `${result.message} (code ${result.code})`
+          );
+        }
+        return result;
+      } catch (e) {
+        debug(e.message);
+        throw e;
       }
-
-      if (!result.result_ok) {
-        throw new Error(
-          `REST API responded to ${method} ${uri.path()} with error result: `
-          + `${result.message} (code ${result.code})`
-        );
-      }
-
-      return result;
     })
     ;
   },
